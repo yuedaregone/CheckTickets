@@ -7,3 +7,5 @@ check_img = urllib2.urlopen(url).read()
 fp = file("../img/check.jpg","wb")
 fp.write(check_img)
 fp.close()
+
+
