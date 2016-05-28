@@ -1,11 +1,78 @@
 #coding:utf-8
 import urllib2
 import urllib
+import re
 
-url = 'https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew?module=login&rand=sjrand&0.07869914087243213'
-check_img = urllib2.urlopen(url).read()
-fp = file("../img/check.jpg","wb")
-fp.write(check_img)
-fp.close()
+start_url = 'http://girl-atlas.com/'
+
+def read_file():
+	fp = file("../img/html.txt","r")
+	content = fp.read()
+	fp.close()
+	return content
+
+def  get_html_content(url):
+	print "fecthing:" + url
+	return urllib2.urlopen(url).read()
+
+def get_jpg_list(content):
+	reg = r'(?:\'|\")http[^ ]+?(?:jpg!mid|jpg|png)(?:\'|\")'
+	imgrgx = re.compile(reg)
+	imglist = re.findall(imgrgx,content)
+	return imglist
+
+def get_url_list(content):
+	reg = r'(?:\'|\")http[^ ]+?(?:\'|\")'
+	imgrgx = re.compile(reg)
+	imglist = re.findall(imgrgx,content)
+	return imglist
+
+def download_file(uri):	
+	l = uri.split('/')
+	name = '/home/yue/Github/PythonStudy/img/' + l[len(l) - 1]	
+	f = urllib2.urlopen(uri) 
+	data = f.read() 
+	with open(name, "wb") as code:
+		code.write(data)
+
+def is_except_str(content):
+	if len(content) < 14:
+		return False
+	reg = r'(?:\'|\")http.+?\.(?:jpg!mid|jpg|png|css|js)(?:\'|\")'
+	imgrgx = re.compile(reg)
+	imglist = re.match(imgrgx,content)
+	if imglist:
+		return True	
+	return False
+	
+
+
+to_fetch_urls = [start_url]
+
+while to_fetch_urls: 
+	html = get_html_content(to_fetch_urls[0])
+	print("fecth url success!")
+	del to_fetch_urls[0]
+
+	jpg_list = get_jpg_list(html)
+	for jpg in jpg_list:
+		jpg = jpg.strip('\"')
+		jpg = jpg.strip('\'')
+		print "downloading:" + jpg
+		download_file(jpg)
+		print "download ok!"
+
+	
+	url_list = get_url_list(html)	
+	for url in url_list:		
+		if not is_except_str(url):
+			url = url.strip('\"')
+			url = url.strip('\'')
+			to_fetch_urls.append(url)
+
+	#for i in to_fetch_urls:
+	#	print(i)
+	
+
 
 
