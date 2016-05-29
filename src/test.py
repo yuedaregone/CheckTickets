@@ -29,7 +29,7 @@ def get_url_list(content):
 
 def download_file(uri):	
 	l = uri.split('/')
-	name = '/home/yue/Github/PythonStudy/img/' + l[len(l) - 1]	
+	name = '/home/yue/workspace/python/img/' + l[len(l) - 1]	
 	f = urllib2.urlopen(uri) 
 	data = f.read() 
 	with open(name, "wb") as code:
@@ -66,9 +66,10 @@ while to_fetch_urls:
 	url_list = get_url_list(html)	
 	for url in url_list:		
 		if not is_except_str(url):
-			url = url.strip('\"')
-			url = url.strip('\'')
-			to_fetch_urls.append(url)
+			if url not in to_fetch_urls:
+				url = url.strip('\"')
+				url = url.strip('\'')
+				to_fetch_urls.append(url)
 
 	#for i in to_fetch_urls:
 	#	print(i)
