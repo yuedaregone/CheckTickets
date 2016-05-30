@@ -1,2 +1,2 @@
 # PythonStudy
-to study python
+just study python
