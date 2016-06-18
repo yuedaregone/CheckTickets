@@ -4,7 +4,6 @@ import threading
 class NetClient:
 	csocket = None
 	recv_gap = 1
-	buff_size = 1024
 
 	def __init__(self):
 		pass
@@ -32,11 +31,12 @@ class NetClient:
 			ssize = ssize + send_size
 
 	def recv(self):
-		print("recv:")
-		ret = self.csocket.recv(buff_size)
-		print(ret)
+		print("recv")
 		timer = threading.Timer(self.recv_gap, self.recv)
 		timer.start()
 
 	def disconnect(self):
 		self.csocket.close()
+
+net1 = NetClient()
+net1.connect("127.0.0.1", 2048)
