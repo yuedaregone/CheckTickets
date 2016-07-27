@@ -4,7 +4,7 @@ import urllib
 import re
 import os
 
-start_url = 'http://weibo.com/'
+start_url = 'http://image.baidu.com'
 
 def read_file():
 	fp = file("../img/html.txt","r")
@@ -22,7 +22,7 @@ def  get_html_content(url):
 	return content
 
 def get_jpg_list(content):
-	reg = r'(?:\'|\")http[^ ]+?(?:txt|pdf)(?:\'|\")'
+	reg = r'(?:\'|\")http[^ ]+?(?:jpg|png)(?:\'|\")'
 	imgrgx = re.compile(reg)
 	imglist = re.findall(imgrgx,content)
 	return imglist
@@ -53,7 +53,7 @@ def download_file(uri):
 def is_except_str(content):
 	if len(content) < 14:
 		return False
-	reg = r'(?:\'|\")http.+?\.(?:txt|pdf)(?:\'|\")'
+	reg = r'(?:\'|\")http.+?\.(?:jpg|png)(?:\'|\")'
 	imgrgx = re.compile(reg)
 	imglist = re.match(imgrgx,content)
 	if imglist:
