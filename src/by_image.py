@@ -120,6 +120,8 @@ if __name__ == '__main__':
 		error_fp.write("\n")
 
 		download_file(jpg_url)
+		command_str = 'SetBackgroud.exe ' + jpg_url
+		os.system(command_str)
 	error_fp.close()
 
 '''
