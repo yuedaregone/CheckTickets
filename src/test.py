@@ -1,42 +1,14 @@
-import socket
-import threading
+#-*-coding:utf-8-*- 
+s='中文'
+print type(s) #查看s的字符类型
+print s  
 
-class NetClient:
-	csocket = None
-	recv_gap = 1
+s.decode('utf8') #解码utf8，默认的编码方式是unicode
+s.decode('gbk', "ignore") #解码utf8，忽略其中有异常的编码，仅显示有效的编码
+s.decode('gbk', 'replace')
+print type(s)
+print s
 
-	def __init__(self):
-		pass
-
-	def connect(self, host, port):
-		self.csocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-		self.csocket.settimeout(15)
-		error_code = self.csocket.connect_ex((host,port))
-		if error_code == 0:
-			timer = threading.Timer(self.recv_gap, self.recv)
-			timer.start()
-		else
-			print("connect error!")
-
-	def send(self, buff):
-		size = len(buff)
-		if size <= 0:
-			print("data is empty!")
-			return
-		sbuff = buff
-		ssize = 0
-		while ssize < size:
-			send_size = self.csocket.send(sbuff)
-			sbuff = sbuff[send_size:len(sbuff)-send_size]
-			ssize = ssize + send_size
-
-	def recv(self):
-		print("recv")
-		timer = threading.Timer(self.recv_gap, self.recv)
-		timer.start()
-
-	def disconnect(self):
-		self.csocket.close()
-
-net1 = NetClient()
-net1.connect("127.0.0.1", 2048)
+s.encode('gb2312') ##编码为utf8
+print type(s)
+print s

@@ -41,9 +41,11 @@ def get_now_time_str():
 	time_array = time.localtime(now)
 	return time.strftime("%Y-%m-%d", time_array)
 
+def get_local_file_name(uri):
+	return file_uri + get_now_time_str() + uri[uri.rfind('.'):len(uri)]
 
 def download_file(uri):
-	name = file_uri + get_now_time_str() + uri[uri.rfind('.'):len(uri)]
+	name = get_local_file_name(uri)
 
 	if os.path.exists(name):
 		return
@@ -120,7 +122,8 @@ if __name__ == '__main__':
 		error_fp.write("\n")
 
 		download_file(jpg_url)
-		command_str = 'SetBackgroud.exe ' + jpg_url
+		command_str = 'SetBackgroud.exe ' + get_local_file_name(jpg_url)
+		
 		os.system(command_str)
 	error_fp.close()
 
