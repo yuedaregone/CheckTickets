@@ -36,10 +36,17 @@ if __name__ == '__main__':
 		print("\t"),
 	print("\n")
 
+
+	if not json_data.has_key("basic"):
+		sys.exit()
+
 	print(u"基本释义：")
 	for tl in json_data["basic"]["explains"]:
 		print(tl)
 	print(" ")
+
+	if not json_data.has_key("web"):
+		sys.exit()
 	
 	print(u"网络释义：")
 	for tlist in json_data["web"]:
