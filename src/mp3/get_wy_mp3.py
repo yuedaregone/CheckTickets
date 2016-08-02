@@ -54,7 +54,7 @@ if __name__ == '__main__':
 		
 		#print(item_id)
 		if file_dict.has_key(str(item_id)):
-			mv_file_num = mv_file_num + 1
+			mv_file_num = mv_file_num + 1			
 			os.rename(music_path+file_dict[str(item_id)], dest_path + item_name + ".mp3")
 	
 	print("find %d file in json file. and move %d file." % (json_file_num, mv_file_num))
