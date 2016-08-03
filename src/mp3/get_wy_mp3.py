@@ -60,7 +60,7 @@ if __name__ == '__main__':
 	print("find %d file in json file. and move %d file." % (json_file_num, mv_file_num))
 	
 	if json_file_num == mv_file_num:
-		os.remove(file_name)
+		#os.remove(file_name)
 		del_all_file(music_path)
 	
 	
