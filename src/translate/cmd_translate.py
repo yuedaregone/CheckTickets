@@ -19,7 +19,7 @@ def  get_html_content(url):
 		print "get html error!"
 	return content
 
-def load_local_translate(word):
+def load_local_translate(word, is_ch):
 	if conn_inst == None:
 		return None	
 	command = ""
