@@ -89,22 +89,11 @@ def insert_translate(key, fetch_data, is_ch):
 		command = "INSERT INTO Words VALUES ('%s', '%s')" % (key.decode("utf8"), explain)	
 	conn_inst.execute(command)
 	conn_inst.commit()
-
-if __name__ == '__main__':
-	if len(sys.argv) <= 1:
-		print("Parameter Error!")
-		sys.exit()
-
-	dirname,fileName = os.path.split(os.path.abspath(sys.argv[0]))
-	dict_path = dirname + dict_path	
 	
-	keyword = sys.argv[1].decode("GBK")	
+def show_translate(keyword):
+	keyword = keyword.decode("GBK")	
 	keyword = keyword.encode("utf8")
 	isHasChinese = has_chinese_character(keyword)
-
-	if os.path.exists(dict_path):
-		conn_inst = sqlite3.connect(dict_path)
-
 	result = None
 	if conn_inst != None:
 		result = load_local_translate(keyword, isHasChinese)
@@ -131,6 +120,25 @@ if __name__ == '__main__':
 
 	if is_from_net == True:
 		insert_translate(keyword, result, isHasChinese)
+		
+def cycle_show_translate():
+	while True:
+		print(u'请输入关键词(按q退出)：')
+		key = raw_input()
+		if key == 'q' or key == 'exit' or key == '':
+			break
+		show_translate(key)
+		
+if __name__ == '__main__':
+	dirname,fileName = os.path.split(os.path.abspath(sys.argv[0]))
+	dict_path = dirname + dict_path
+	if os.path.exists(dict_path):
+		conn_inst = sqlite3.connect(dict_path)
+	
+	if len(sys.argv) <= 1:
+		cycle_show_translate()
+	else:
+		show_translate(sys.argv[1])
 
 	if conn_inst != None:
 		conn_inst.close()	
