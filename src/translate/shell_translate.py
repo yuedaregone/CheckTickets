@@ -100,7 +100,8 @@ def show_translate(keyword):
 	is_from_net = False
 	if result == None:
 		result = fecth_net_translate(keyword)
-		is_from_net = True
+		if len(result) > 1:
+			is_from_net = True		
 
 	if result == None:
 		print(u"没有找到翻译")

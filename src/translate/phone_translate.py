@@ -113,7 +113,8 @@ if __name__ == '__main__':
 	is_from_net = False
 	if result == None:
 		result = fecth_net_translate(keyword)
-		is_from_net = True
+		if len(result) > 1:
+			is_from_net = True
 
 	if result == None:
 		print("没有找到翻译")
