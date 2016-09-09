@@ -11,13 +11,15 @@ class NetClient:
 
 	def connect(self, host, port):
 		self.csocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-		self.csocket.settimeout(15)
 		error_code = self.csocket.connect_ex((host,port))
+		self.csocket.setblocking(0)
 		if error_code == 0:
 			timer = threading.Timer(self.recv_gap, self.recv)
 			timer.start()
-		else
+			return 0
+		else:
 			print("connect error!")
+		return -1
 
 	def send(self, buff):
 		size = len(buff)
@@ -32,11 +34,28 @@ class NetClient:
 			ssize = ssize + send_size
 
 	def recv(self):
-		print("recv:")
-		ret = self.csocket.recv(buff_size)
-		print(ret)
+		ret = ""
+		try:
+			ret = self.csocket.recv(self.buff_size)
+		except Exception, e:
+			pass
+		if ret != "":
+			print("recv:")
+			print(ret)
 		timer = threading.Timer(self.recv_gap, self.recv)
 		timer.start()
 
 	def disconnect(self):
 		self.csocket.close()
+
+if __name__ == '__main__':
+	client = NetClient()
+	error_code = client.connect("127.0.0.1", 20480)
+
+	if error_code == 0:
+		while True:
+			key = raw_input()
+			if key == 'q' or key == '':
+				break
+			client.send(key)
+	client.disconnect()
