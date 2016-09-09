@@ -1,7 +1,5 @@
  #!/usr/bin/python
 import socket
-import commands
-import select
 import threading
 
 class NetServer:
