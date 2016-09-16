@@ -64,7 +64,9 @@ class NetServer:
 
 
 if __name__ == '__main__':
-	server = NetServer("127.0.0.1", 20480)
+	#addr = socket.getaddrinfo("daregone.f3322.net",20480)
+	#server = NetServer(addr[0][4][0], 20480)
+	server = NetServer("192.168.0.149", 20480)
 	server.SocketAccept()
 
 
