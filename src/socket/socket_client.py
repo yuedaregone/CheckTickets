@@ -50,8 +50,8 @@ class NetClient:
 
 if __name__ == '__main__':
 	client = NetClient()
-	addr = socket.getaddrinfo("daregone.f3322.net",20480)
-	#addr = socket.getaddrinfo("192.168.0.149",20480)
+	#addr = socket.getaddrinfo("daregone.f3322.net",20480)
+	addr = socket.getaddrinfo("192.168.0.148",20480)
 	print(addr[0][4][0])
 	error_code = client.connect(addr[0][4][0],20480)
 
