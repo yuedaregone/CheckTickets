@@ -2,8 +2,6 @@
 import urllib2
 import urllib
 import json
-import Tkinter
-import tkMessageBox
 import time
 import re
 import datetime
@@ -24,20 +22,24 @@ def getTicketInfo(dest_url):
         data = urllib2.urlopen(dest_url).read()
     except Exception as e:
         print(u"输入信息有误，请重新输入。")
-        return
+        return False
 
     if data == "-1" or data == '':
         print(u"找不到查找的信息，请重新输入。")
-        return
+        return False
 
     json_data = ''
     try:
         json_data = json.loads(data)
     except Exception as e:
         print(u"输入信息有误，请重新输入。")
-        return
+        return False
 
-    list_data = json_data["data"]["datas"]
+    list_data = json_data["data"].get("datas", "")
+    if list_data == "":
+        print(u"找不到查找的信息，请重新输入。")
+        return False
+
     now = datetime.datetime.now()
     now.strftime('%Y-%m-%d %H:%M:%S')
     print("-------------------")
@@ -59,6 +61,7 @@ def getTicketInfo(dest_url):
             print(u"硬卧：" + item["yw_num"])
     if not findTicket:
         print(u"暂时没有票。。")
+    return True
 
 def checkDate(date):
     return re.compile(r'\d\d\d\d-\d\d-\d\d').search(date)
@@ -98,6 +101,5 @@ if __name__ == "__main__":
         print(u'请输入终点站：')
         e_city = getCity()
         dest_url = url % (date, s_city, e_city)
-        while 1:
-            getTicketInfo(dest_url)
-        #time.sleep(1)
+        while getTicketInfo(dest_url):
+            time.sleep(0.5)
