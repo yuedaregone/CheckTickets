@@ -61,12 +61,10 @@ def fecth_net_translate(word):
 	return result	
 
 def has_chinese_character(t_str):
-	zhPattern = re.compile('[^\u4e00-\u9fa5]+')
-	match = zhPattern.search(t_str)
-	if match:
-		return True
-	else:
-		return False
+	for ch in t_str:
+		if ch >= u'\u4e00' and ch <= u'\u9fff':
+			return True
+	return False
 
 def insert_translate(key, fetch_data, is_ch):
 	if conn_inst == None:
@@ -78,7 +76,7 @@ def insert_translate(key, fetch_data, is_ch):
 		if type(item[1]) == list or type(item[1]) == tuple:
 			for exp in item[1]:				
 				explain = explain + exp + ","
-		else:
+		elif key != item[1]:
 			explain = explain + item[1] + ","
 	if explain == "":
 		return
@@ -90,10 +88,13 @@ def insert_translate(key, fetch_data, is_ch):
 	conn_inst.execute(command)
 	conn_inst.commit()
 	
-def show_translate(keyword):
+def show_translate(keyword):	
 	keyword = keyword.decode("GBK")	
-	keyword = keyword.encode("utf8")
 	isHasChinese = has_chinese_character(keyword)
+	keyword = keyword.encode("utf8")	
+	
+	if isHasChinese:
+		print(u"中文")
 	result = None
 	if conn_inst != None:
 		result = load_local_translate(keyword, isHasChinese)

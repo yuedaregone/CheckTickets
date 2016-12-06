@@ -61,12 +61,10 @@ def fecth_net_translate(word):
 	return result	
 
 def has_chinese_character(t_str):
-	zhPattern = re.compile('[^\u4e00-\u9fa5]+')
-	match = zhPattern.search(t_str)
-	if match:
-		return True
-	else:
-		return False
+	for ch in t_str.decode("utf-8"):
+		if ch >= u'\u4e00' and ch <= u'\u9fff':
+			return True
+	return False
 
 def insert_translate(key, fetch_data, is_ch):
 	if conn_inst == None:
