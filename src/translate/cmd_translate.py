@@ -92,9 +92,7 @@ def show_translate(keyword):
 	keyword = keyword.decode("GBK")	
 	isHasChinese = has_chinese_character(keyword)
 	keyword = keyword.encode("utf8")	
-	
-	if isHasChinese:
-		print(u"中文")
+		
 	result = None
 	if conn_inst != None:
 		result = load_local_translate(keyword, isHasChinese)
