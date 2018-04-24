@@ -6,9 +6,9 @@ import os
 import time
 import sys
 from HTMLParser import HTMLParser
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtWebKit import *
+#from PyQt4.QtCore import *
+#from PyQt4.QtGui import *
+#from PyQt4.QtWebKit import *
 
 start_url = 'https://cn.bing.com'
 file_uri = 'D:\\Downloads\\wallpaper\\'

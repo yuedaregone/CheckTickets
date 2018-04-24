@@ -16,7 +16,7 @@ def  get_html_content(url):
 	try:
 		content = urllib2.urlopen(url).read()
 	except:
-		print "get html error!"
+		print("get html error!")
 	return content
 
 def load_local_translate(word, is_ch):
