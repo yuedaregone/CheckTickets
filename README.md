@@ -1,4 +1,3 @@
-# PythonStudy
-Just study python
+Stupid
 
 
